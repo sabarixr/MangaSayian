@@ -16,7 +16,11 @@ async def on_message(message):
 
     if message.content == 'recent release':
         names = get_names()
-        await message.channel.send(names)
+        name = names.split('\n')
+        for _ in name:
+            if not _:
+                continue
+            await message.channel.send(_)
 
     elif message.content.startswith('/link'):
         name_search = message.content.split(' ')
