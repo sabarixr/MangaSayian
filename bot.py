@@ -13,24 +13,34 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:  # To avoid the bot processing its own messages
         return
-
+    msg = ''
     if message.content == 'recent release':
         names = get_names()
         name = names.split('\n')
+        i =0
         for _ in name:
+            i+=1
+            if i>11:
+                break
             if not _:
+                msg +="........................"
                 continue
-            await message.channel.send(_)
+            msg += f"{_}\n"
+        await message.channel.send(msg)
 
     elif message.content.startswith('/link'):
-        name_search = message.content.split(' ')
-        if len(name_search) < 3:
-            await message.channel.send('Please enter the name of the manga and chapter')
-        else:
-            manga_name = name_search[1]
-            chapter = name_search[2]
-            result = img_scraper(manga_name, chapter)
-            await message.channel.send(result)
+        name_search = message.content
+        print(name_search)
+        title = name_search.strip("/link").strip()
+        converted_title = title.lower().replace(" ", "-").replace("’", "")
+        last_dash_index = converted_title.rfind('-')
+        first_part = converted_title[:last_dash_index]
+        last_part = converted_title[last_dash_index + 1:]
+        output_title = first_part + "-chapter-" + last_part
+        url = f"https://asuratoon.com/9643503911-{output_title}/"
+        print(url)
+        result = img_scraper(url)
+        await message.channel.send(result)
 
     elif message.content == 'help':
         help_message = '''
