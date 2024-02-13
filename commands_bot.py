@@ -1,7 +1,7 @@
 from discord.ext import commands
 from first_app import img_scraper
 from scraper_names import get_names,get_top
-
+from detailed_scraper import check_scrap, info_scrap
 def bot_commands(bot):
     @bot.event
     async def on_ready():
@@ -25,7 +25,10 @@ def bot_commands(bot):
 
     @bot.command(aliases=["che_ck"])
     async def check(ctx):
-        await ctx.send("not added the code yet")
+        title = ctx.message.content.strip("/check").strip()
+        result = check_scrap(title)
+        print(title)
+        await ctx.send(result)
 
     @bot.command(aliases=["t_op"])
     async def top(ctx):
@@ -34,13 +37,15 @@ def bot_commands(bot):
 
     @bot.command(aliases=["in_fo"])
     async def info(ctx):
-        await ctx.send("not added the code yet")
+        title = ctx.message.content.strip("/info").strip()
+        result = info_scrap(title)
+        await ctx.send(result)
 
     @bot.command(aliases=["he_lp"])
     async def help(ctx):
         help_message = '''
-        ```
-        /link <name of the webtoon><chapter number>**: Get the direct link to the specified chapter of your favorite manga.
+        ```\n
+        \n/link <name of the webtoon><chapter number>**: Get the direct link to the specified chapter of your favorite manga.
 
         \n/help: Need assistance? Use this command to get a list of available commands along with a brief introduction to Manga Man.
 
