@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import discord
 from discord.ext import commands
-from commands_bot import bot_commands
+from bot.commands import bot_commands
 
 load_dotenv()
 DISCORD_API = os.getenv("DISCORD_API")

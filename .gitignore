@@ -1,3 +1,5 @@
 new.py
 .env
 .vscode
+test/
+venv/
